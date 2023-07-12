@@ -1,0 +1,21 @@
+body{
+    display: flex
+    
+}
+
+header{
+    display: flex;
+    font-size: 30pt;
+}
+
+ol{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+}
+
+#submit{
+    display: flex;
+    align-items: center;
+}
