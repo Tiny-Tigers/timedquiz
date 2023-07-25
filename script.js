@@ -1,19 +1,3 @@
-var currentQuestion = document.getElementById("prompt");
-var choiceOne = document.getElementById("choice1")
-var choiceTwo = document.getElementById("choice2")
-var choiceThree = document.getElementById("choice3")
-var choiceFour = document.getElementById("choice4")
-var answers = document.getElementsByClassName("choices")
-var answers1 = document.getElementById("options")
-//var correctChoice.currentQuestion = 
-//var userChoice = addEventListener("click", answers)
-var instructions = document.getElementById("multiple-choice");
-var timeEl = document.querySelector(".time");
-var startButton = document.getElementById("timer-start")
-var submitButton = document.getElementById("submit")
-var secondsLeft = 120;
-submitButton.style.display="none"
-answers1.style.display="none"
 var questionsList = [
   {
     prompt: "What is the key word for a variable in JavaScript?",
@@ -56,6 +40,24 @@ var questionsList = [
     correctChoice: "Reddit"
 }
   ]
+var questionEl = document.getElementById("prompt");
+var currentQuestionIndex = 0
+var currentQuestion = questionsList[currentQuestionIndex]
+var score = 0
+var choiceOne = document.getElementById("choice1")
+var choiceTwo = document.getElementById("choice2")
+var choiceThree = document.getElementById("choice3")
+var choiceFour = document.getElementById("choice4")
+var possibleAnswers = document.getElementById("options")
+var answers1 = document.getElementById("options")
+//var userChoice = addEventListener("click", answers)
+var instructions = document.getElementById("multiple-choice");
+var timeEl = document.querySelector(".time");
+var startButton = document.getElementById("timer-start")
+var submitButton = document.getElementById("submit")
+var secondsLeft = 120;
+submitButton.style.display="none"
+answers1.style.display="none"
 
     console.log(questionsList)
 
@@ -66,39 +68,51 @@ function setTime() {
   
       if(secondsLeft === 0) {
         clearInterval(timerInterval);
-        sendMessage();
+        display.alert();
       }
   
     }, 1000);
 }
-for (let i = 0; i < 4; i--) {
+for ( var i = 0; i < 5; i++ ) {
 function startQuiz(){
     setTime()
     answers1.style.display=""
     startButton.style.display="none"
     submitButton.style.display="Submit Answer"
-    currentQuestion.textContent = questionsList[0, 1, 2, 3, 4].prompt;
-    choiceOne.textContent = questionsList[0, 1, 2, 3, 4].choice1
-    choiceTwo.textContent = questionsList[0, 1, 2, 3, 4].choice2
-    choiceThree.textContent = questionsList[0, 1, 2, 3, 4].choice3
-    choiceFour.textContent = questionsList[0, 1, 2, 3, 4].choice4
+    questionEl.textContent = questionsList[currentQuestionIndex].prompt;
+    choiceOne.textContent = questionsList[currentQuestionIndex].choice1;
+    choiceTwo.textContent = questionsList[currentQuestionIndex].choice2;
+    choiceThree.textContent = questionsList[currentQuestionIndex].choice3;
+    choiceFour.textContent = questionsList[currentQuestionIndex].choice4;
     //choices.eventListener("click", checkAnswer())
 }}
 
-function checkAnswer(){
-  if (userChoice == correctChoice) {
-    
+function checkAnswer(e){
+  var userChoice = e.target
+  var correctChoice = currentQuestion.correctChoice
+  console.log(userChoice.innerText)
+  console.log(correctChoice)
+  if (userChoice.innerText == correctChoice) {
+    score++
+    console.log(score)
   }
+nextQuestion()
 }
-function nextQuestion(){}
+
+function nextQuestion(){
+  currentQuestionIndex++
+  questionEl.textContent = questionsList[currentQuestionIndex].prompt;
+    choiceOne.textContent = questionsList[currentQuestionIndex].choice1;
+    choiceTwo.textContent = questionsList[currentQuestionIndex].choice2;
+    choiceThree.textContent = questionsList[currentQuestionIndex].choice3;
+    choiceFour.textContent = questionsList[currentQuestionIndex].choice4;
+}
 
 function endQuiz(){}
 //give name and score, *local storage*
-
-
-//var possibleAnswers = document.getElementsByClassName("choices")
 
 //querySelectorAll(possibleAnswers)
 
 //console.log(possibleAnswers)   
 startButton.addEventListener("click", startQuiz)
+possibleAnswers.addEventListener("click", checkAnswer)
